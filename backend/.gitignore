@@ -1,0 +1,16 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+dev_env 
+.env
+migrations
+
+# MacOS files
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
