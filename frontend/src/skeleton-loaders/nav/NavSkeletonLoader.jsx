@@ -1,5 +1,5 @@
-import React from 'react';
-import './NavSkeletonLoader.css'; // Ensure this is where your CSS is defined
+import React from "react";
+import "./NavSkeletonLoader.css";
 
 const NavSkeletonLoader = () => {
   return (

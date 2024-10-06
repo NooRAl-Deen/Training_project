@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CreatePostInputs from "../../components/form/fields/PostInputs";
 import Input from "../../components/form/Input";
 import Textarea from "../../components/form/Textarea";
@@ -8,18 +8,28 @@ import ErrorMessage from "../../components/errors/ErrorMessage";
 import Spinner from "../../components/Spinner";
 import { isObjectEmpty } from "../../helpers/FormsValidation";
 import useError from "../../hooks/useError";
-import useCreateMutation from "../../hooks/queries/useCreateMutation";
+import useUpdateMutation from "../../hooks/queries/useUpdateMutation";
 import { handleAxiosError } from "../../error-handling/AxiosErrorsHandlers";
+import useFetchData from "../../hooks/queries/useFetchData";
 
-const CreatePost = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-  });
-  const { errorMessage, setErrorMessage, triggerError } = useError();
+const UpdatePost = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { mutate, isLoading } = useCreateMutation("/posts/");
-
+  const [formData, setFormData] = useState({});
+  const { errorMessage, setErrorMessage, triggerError } = useError();
+  const { mutate, isLoading } = useUpdateMutation(`/posts/${id}`);
+  const { data, error, isLoading: isFetching } = useFetchData(`/posts/${id}`);
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        title: data.posts.title,
+        description: data.posts.description,
+      });
+    }
+    if (error) {
+      triggerError("Failed to fetch post data.");
+    }
+  }, [data, error, triggerError]);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -45,7 +55,7 @@ const CreatePost = () => {
   return (
     <main className="bg-gradient vh-100 d-flex align-items-center">
       <div className="container">
-        <section className="section create-post d-flex flex-column align-items-center justify-content-center py-4">
+        <section className="section update-post d-flex flex-column align-items-center justify-content-center py-4">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-6 col-md-8 d-flex flex-column align-items-center justify-content-center">
@@ -53,10 +63,10 @@ const CreatePost = () => {
                   <div className="card-body">
                     <div className="pt-4 pb-2 text-center">
                       <h5 className="card-title fs-4 fw-bold text-primary">
-                        Create Post
+                        Update Post
                       </h5>
                       <p className="text-muted small">
-                        Fill in the details to create a post
+                        Fill in the details to update the post
                       </p>
                     </div>
                     {errorMessage ? (
@@ -72,13 +82,13 @@ const CreatePost = () => {
                           {input.type === "textarea" ? (
                             <Textarea
                               {...input}
-                              value={formData[input.name]}
+                              value={formData[input.name] || ""}
                               onChange={onChange}
                             />
                           ) : (
                             <Input
                               {...input}
-                              value={formData[input.name]}
+                              value={formData[input.name] || ""}
                               onChange={onChange}
                             />
                           )}
@@ -86,7 +96,7 @@ const CreatePost = () => {
                       ))}
                       <div className="col-12">
                         <FormButton
-                          text={isLoading ? <Spinner /> : "Create Post"}
+                          text={isLoading ? <Spinner /> : "Update Post"}
                         />
                       </div>
                       <div className="col-12">
@@ -112,4 +122,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default UpdatePost;

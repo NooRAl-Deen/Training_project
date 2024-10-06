@@ -1,39 +1,38 @@
 .placeholder {
-    background-color: #e0e0e0; /* Base color for placeholders */
-    border-radius: 0.25rem; /* Rounded corners */
-    display: inline-block; /* Inline block for placeholders */
+  background-color: #e0e0e0;
+  border-radius: 0.25rem;
+  display: inline-block;
+}
+
+.brand-placeholder {
+  width: 100px;
+  height: 30px;
+}
+
+.navbar-toggler-placeholder {
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+}
+
+.nav-link-placeholder {
+  width: 70px;
+  height: 20px;
+  margin: 0 10px;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 1;
   }
-  
-  .brand-placeholder {
-    width: 100px; /* Width for the brand placeholder */
-    height: 30px; /* Height for the brand placeholder */
+  50% {
+    opacity: 0.5;
   }
-  
-  .navbar-toggler-placeholder {
-    width: 30px; /* Width for the toggler placeholder */
-    height: 30px; /* Height for the toggler placeholder */
-    margin-left: auto; /* Align toggler to the right */
+  100% {
+    opacity: 1;
   }
-  
-  .nav-link-placeholder {
-    width: 70px; /* Width for nav links */
-    height: 20px; /* Height for nav links */
-    margin: 0 10px; /* Spacing between links */
-  }
-  
-  @keyframes shimmer {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5; /* Change opacity for the pulsing effect */
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  .shimmer {
-    animation: shimmer 1.5s infinite; /* Add shimmer effect */
-  }
-  
+}
+
+.shimmer {
+  animation: shimmer 1.5s infinite;
+}

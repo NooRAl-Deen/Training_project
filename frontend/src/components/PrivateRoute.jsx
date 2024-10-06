@@ -1,11 +1,10 @@
 import { Navigate } from "react-router-dom";
-import useCurrentToken from "../hooks/useCurrentToken"
-
+import useCurrentToken from "../hooks/useCurrentToken";
 
 const PrivateRoute = ({ children }) => {
-    const { token } = useCurrentToken()
+  const { token } = useCurrentToken();
 
-    return token ? children : <Navigate to="/" replace={true} />
-}
+  return token ? children : <Navigate to="/" replace={true} />;
+};
 
 export default PrivateRoute;

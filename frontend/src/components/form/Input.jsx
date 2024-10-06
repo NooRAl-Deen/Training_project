@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Input.css"
+import "./Input.css";
 
 const Input = (props) => {
   const [focused, setFocused] = useState(false);
@@ -9,10 +9,8 @@ const Input = (props) => {
     setFocused(true);
   };
   return (
-    <div className="mb-3">
-      <label className="form-label">
-        {label}
-      </label>
+    <div className="col-12">
+      <label className="form-label">{label}</label>
       <input
         {...inputProps}
         onChange={onChange}
@@ -21,7 +19,7 @@ const Input = (props) => {
           inputProps.name === "confirmPassword" && setFocused(true)
         }
         focused={focused.toString()}
-        className="form-control "
+        className="form-control formInput"
       />
       <span>{errorMessage}</span>
     </div>

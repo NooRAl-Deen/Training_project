@@ -29,8 +29,8 @@ def create_app():
     app.config['SECRET_KEY'] = 'SOMETEXT'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:noor12@localhost/flask_db'
     app.config['JWT_IDENTITY_CLAIM'] = 'user_id'
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=10)
-    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=1)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=2)
+    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=2)
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)

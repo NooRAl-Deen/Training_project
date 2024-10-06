@@ -1,9 +1,8 @@
-import { useContext } from "react"
-import { CurrentTokenContext } from "../contexts/CurrentTokenContext"
-
+import { useContext } from "react";
+import { CurrentTokenContext } from "../contexts/CurrentTokenContext";
 
 const useCurrentToken = () => {
-    return useContext(CurrentTokenContext)
-}
+  return useContext(CurrentTokenContext);
+};
 
-export default useCurrentToken
+export default useCurrentToken;

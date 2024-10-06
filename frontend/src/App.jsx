@@ -1,19 +1,19 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CurrentTokenProvider } from "./contexts/CurrentTokenContext";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import AppRoutes from "./routes/AppRoutes";
+import "./App.css";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    // <CurrentTokenProvider>
     <QueryClientProvider client={queryClient}>
       <ErrorProvider>
         <AppRoutes />
       </ErrorProvider>
     </QueryClientProvider>
-    // </CurrentTokenProvider>
   );
 }
 

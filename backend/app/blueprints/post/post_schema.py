@@ -19,4 +19,4 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
         model = Post
         load_instance = True
         include_fk = True
-        exclude = ['id', 'user_id']
+        exclude = ['user_id']

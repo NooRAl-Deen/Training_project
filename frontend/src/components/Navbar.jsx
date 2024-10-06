@@ -3,11 +3,11 @@ import useCurrentToken from "../hooks/useCurrentToken";
 import LogoutButton from "./LogoutButton";
 
 const NavComponent = () => {
-  const {token, setToken} = useCurrentToken();
+  const { token } = useCurrentToken();
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light header shadow-sm">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand fw-bold text-primary" to="/">
           MyApp
         </Link>
         <button
@@ -24,7 +24,7 @@ const NavComponent = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link active" to="/">
                 Home
               </Link>
             </li>
@@ -34,34 +34,36 @@ const NavComponent = () => {
               </Link>
             </li>
           </ul>
-          {token ? (
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/profile">
-                  Profile
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/posts">
-                  Posts
-                </Link>
-              </li>
-              <LogoutButton/>
-            </ul>
-          ) : (
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Register
-                </Link>
-              </li>
-            </ul>
-          )}
+          <ul className="navbar-nav">
+            {token ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/profile">
+                    Profile
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/posts">
+                    Posts
+                  </Link>
+                </li>
+                <LogoutButton />
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Register
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </div>
     </nav>

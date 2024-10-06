@@ -1,7 +1,6 @@
 import { useState } from "react";
-import NavComponent from "../../components/Navbar";
 import inputs from "../../components/form/fields/RegisterInputs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/form/Input";
 import FormButton from "../../components/form/FormButton";
 import { isObjectEmpty } from "../../helpers/FormsValidation";
@@ -19,7 +18,7 @@ const Register = () => {
     confirmPassword: "",
   });
   const { errorMessage, setErrorMessage, triggerError } = useError();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -45,35 +44,65 @@ const Register = () => {
         },
         onSuccess: () => {
           setErrorMessage("");
-          navigate('/login')
+          navigate("/login");
         },
       });
     }
   };
 
   return (
-    <div>
-      <NavComponent />
-      <div className="container mt-5">
-        <h2 className="text-center">Register</h2>
-        <div className="row justify-content-center">
-          <div className="col-md-4">
-            {errorMessage ? <ErrorMessage message={errorMessage} /> : ""}
-            <form className="mt-4" onSubmit={handleRegister} noValidate={true}>
-              {inputs.map((input, index) => (
-                <Input
-                  key={index}
-                  {...input}
-                  value={formData[input.name]}
-                  onChange={onChange}
-                />
-              ))}
-              <FormButton text={isLoading ? <Spinner /> : "Register"} />
-            </form>
+    <main className="vh-100 d-flex align-items-center">
+      <div className="container">
+        <section className="section register d-flex flex-column align-items-center justify-content-center py-4">
+          <div className="row justify-content-center">
+            <div className="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+              <div className="card shadow-sm border-light mb-3">
+                <div className="card-body">
+                  <div className="pt-4 pb-2 text-center">
+                    <h5 className="card-title fs-4 fw-bold text-primary">
+                      Create an Account
+                    </h5>
+                    <p className="text-muted small">
+                      Enter your personal details to create an account
+                    </p>
+                  </div>
+                  {errorMessage ? <ErrorMessage message={errorMessage} /> : ""}
+                  <form
+                    className="row g-3 needs-validation"
+                    onSubmit={handleRegister}
+                    noValidate
+                  >
+                    {inputs.map((input, index) => (
+                      <div className="col-12" key={index}>
+                        <Input
+                          {...input}
+                          value={formData[input.name]}
+                          onChange={onChange}
+                        />
+                      </div>
+                    ))}
+                    <div className="col-12">
+                      <FormButton text={isLoading ? <Spinner /> : "Register"} />
+                    </div>
+                    <div className="col-12">
+                      <p className="small mb-0">
+                        Already have an account?{" "}
+                        <Link
+                          to="/login"
+                          className="text-decoration-none text-primary"
+                        >
+                          Log in
+                        </Link>
+                      </p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

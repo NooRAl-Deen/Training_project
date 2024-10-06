@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "../../../api/Axios";
+import { axiosPrivate } from "../../api/Axios";
 
-const useAuthMutation = (url) => {
+const useUpdateMutation = (url) => {
   return useMutation({
     mutationFn: async (payload) => {
       try {
-        const { data } = await axiosInstance.post(url, payload);
+        const { data } = await axiosPrivate.put(url, payload);
         return data;
       } catch (error) {
         throw error;
@@ -14,4 +14,4 @@ const useAuthMutation = (url) => {
   });
 };
 
-export default useAuthMutation;
+export default useUpdateMutation;
