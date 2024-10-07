@@ -7,6 +7,8 @@ from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
 from flask_cors import CORS
+from config import Config
+
 
 
 db = SQLAlchemy()
@@ -26,11 +28,9 @@ def create_app():
     "supports_credentials": True
 }})
 
-    app.config['SECRET_KEY'] = 'SOMETEXT'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:noor12@localhost/flask_db'
-    app.config['JWT_IDENTITY_CLAIM'] = 'user_id'
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=2)
-    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=2)
+    app.config.from_object(Config)
+
+    
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)

@@ -4,6 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import AppRoutes from "./routes/AppRoutes";
 import "./App.css";
+import "./utils/i18n"
 
 const queryClient = new QueryClient();
 

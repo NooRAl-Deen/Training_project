@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const baseUrl = "http://127.0.0.1:5000/api";
+const baseURL = import.meta.env.VITE_BASE_API_URL;
 
 const axiosInstance = axios.create({
-  baseURL: baseUrl,
+  baseURL,
 });
 
 const axiosPrivate = axios.create({
-  baseURL: baseUrl,
+  baseURL,
 });
 
 axiosPrivate.interceptors.request.use(

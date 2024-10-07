@@ -1,10 +1,16 @@
+import { useTranslation } from "react-i18next";
+import { translationKeys } from "../helpers/TranslitionKeys";
+
 const NotFound = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="container mt-5">
-        <h2 className="text-center">404 - Not Found</h2>
+        <h2 className="text-center">
+          {t(translationKeys.NOT_FOUND_TITLE_KEY)}
+        </h2>
         <p className="text-center">
-          Sorry, the page you are looking for does not exist.
+          {t(translationKeys.NOT_FOUND_DESCRIPTION_KEY)}
         </p>
       </div>
     </div>

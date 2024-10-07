@@ -9,6 +9,8 @@ import useError from "../../hooks/useError";
 import useAuthMutation from "../../hooks/queries/auth/useAuthMutation";
 import { handleAxiosError } from "../../error-handling/AxiosErrorsHandlers";
 import Spinner from "../../components/Spinner";
+import { useTranslation } from "react-i18next";
+import {translationKeys} from "../../helpers/TranslitionKeys";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ const Register = () => {
     confirmPassword: "",
   });
   const { errorMessage, setErrorMessage, triggerError } = useError();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,7 +37,7 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (isObjectEmpty(formData)) {
-      triggerError("Please fill all fields.");
+      triggerError(t(translationKeys.EMPTY_FORM_MESSAGE_KEY));
     } else {
       setErrorMessage("");
       mutate(transformedData, {
@@ -60,10 +63,10 @@ const Register = () => {
                 <div className="card-body">
                   <div className="pt-4 pb-2 text-center">
                     <h5 className="card-title fs-4 fw-bold text-primary">
-                      Create an Account
+                      {t(translationKeys.REGISTER_FORM_TITLE_KEY)}
                     </h5>
                     <p className="text-muted small">
-                      Enter your personal details to create an account
+                      {t(translationKeys.REGISTER_FORM_DESCRIPTION_KEY)}
                     </p>
                   </div>
                   {errorMessage ? <ErrorMessage message={errorMessage} /> : ""}
@@ -82,16 +85,16 @@ const Register = () => {
                       </div>
                     ))}
                     <div className="col-12">
-                      <FormButton text={isLoading ? <Spinner /> : "Register"} />
+                      <FormButton text={isLoading ? <Spinner /> : t(translationKeys.REGISTER_BUTTON_KEY) } />
                     </div>
                     <div className="col-12">
                       <p className="small mb-0">
-                        Already have an account?{" "}
+                      {t(translationKeys.ALREADY_HAVE_ACCOUNT_KEY)}
                         <Link
                           to="/login"
                           className="text-decoration-none text-primary"
                         >
-                          Log in
+                          {t(translationKeys.LOGIN_KEY)}
                         </Link>
                       </p>
                     </div>

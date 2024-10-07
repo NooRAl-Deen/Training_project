@@ -1,13 +1,13 @@
+import { useTranslation } from "react-i18next";
+import {translationKeys} from "../../helpers/TranslitionKeys";
+
 const Home = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="container mt-5">
-        <h2 className="text-center">Welcome to MyApp</h2>
-        <p className="text-center">
-          This is a simple application to help you manage your tasks and connect
-          with various services. Please explore the navigation links to learn
-          more about our features and offerings.
-        </p>
+        <h2 className="text-center">{t(translationKeys.HOME_TITLE_KEY)}</h2>
+        <p className="text-center">{t(translationKeys.HOME_DESCRIPTION_KEY)}</p>
       </div>
     </div>
   );
