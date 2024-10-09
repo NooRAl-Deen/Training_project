@@ -10,7 +10,7 @@ import useAuthMutation from "../../hooks/queries/auth/useAuthMutation";
 import { handleAxiosError } from "../../error-handling/AxiosErrorsHandlers";
 import Spinner from "../../components/Spinner";
 import { useTranslation } from "react-i18next";
-import {translationKeys} from "../../helpers/TranslitionKeys";
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +20,7 @@ const Register = () => {
     confirmPassword: "",
   });
   const { errorMessage, setErrorMessage, triggerError } = useError();
-  const { t } = useTranslation();
+  const { t } = useTranslation('auth\\register');
   const navigate = useNavigate();
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +37,7 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (isObjectEmpty(formData)) {
-      triggerError(t(translationKeys.EMPTY_FORM_MESSAGE_KEY));
+      triggerError(t('empty_form_message'));
     } else {
       setErrorMessage("");
       mutate(transformedData, {
@@ -63,10 +63,10 @@ const Register = () => {
                 <div className="card-body">
                   <div className="pt-4 pb-2 text-center">
                     <h5 className="card-title fs-4 fw-bold text-primary">
-                      {t(translationKeys.REGISTER_FORM_TITLE_KEY)}
+                      {t('form_title')}
                     </h5>
                     <p className="text-muted small">
-                      {t(translationKeys.REGISTER_FORM_DESCRIPTION_KEY)}
+                      {t('form_description')}
                     </p>
                   </div>
                   {errorMessage ? <ErrorMessage message={errorMessage} /> : ""}
@@ -85,16 +85,16 @@ const Register = () => {
                       </div>
                     ))}
                     <div className="col-12">
-                      <FormButton text={isLoading ? <Spinner /> : t(translationKeys.REGISTER_BUTTON_KEY) } />
+                      <FormButton text={isLoading ? <Spinner /> : t('button') } />
                     </div>
                     <div className="col-12">
                       <p className="small mb-0">
-                      {t(translationKeys.ALREADY_HAVE_ACCOUNT_KEY)}
+                      {t('already_have_account')}
                         <Link
                           to="/login"
                           className="text-decoration-none text-primary"
                         >
-                          {t(translationKeys.LOGIN_KEY)}
+                          {t('login')}
                         </Link>
                       </p>
                     </div>

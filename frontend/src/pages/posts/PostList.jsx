@@ -5,8 +5,10 @@ import useFetchData from "../../hooks/queries/useFetchData";
 import PostListSkeletonLoader from "../../skeleton-loaders/posts/PostListSkeletonLoader";
 import useDeleteMutation from "../../hooks/queries/useDeleteMutation";
 import useError from "../../hooks/useError";
+import { useTranslation } from 'react-i18next';
 
 const PostList = () => {
+  const { t } = useTranslation('posts\\list');
   const [posts, setPosts] = useState([]);
   const { errorMessage, triggerError } = useError();
 
@@ -18,6 +20,7 @@ const PostList = () => {
       setPosts(data.posts);
     }
   }, [data]);
+
   const deletePost = (id) => {
     mutate(id, {
       onSuccess: () => {
@@ -38,9 +41,9 @@ const PostList = () => {
     <div>
       <div className="container mt-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="text-center">Posts</h2>
+          <h2 className="text-center">{t("posts")}</h2>
           <Link to="/post-create" className="btn btn-primary">
-            Create Post
+            {t("create_post_button")}
           </Link>
         </div>
         {errorMessage && (
@@ -51,7 +54,7 @@ const PostList = () => {
         <div className="row">
           {posts.length === 0 ? (
             <div className="col-12 text-center">
-              <p className="text-muted">No posts available.</p>
+              <p className="text-muted">{t("no_posts_available")}</p>
             </div>
           ) : (
             posts.map((post, index) => (

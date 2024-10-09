@@ -10,8 +10,10 @@ import { isObjectEmpty } from "../../helpers/FormsValidation";
 import useError from "../../hooks/useError";
 import useCreateMutation from "../../hooks/queries/useCreateMutation";
 import { handleAxiosError } from "../../error-handling/AxiosErrorsHandlers";
+import { useTranslation } from 'react-i18next';
 
 const CreatePost = () => {
+  const { t } = useTranslation('posts\\create');
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -27,7 +29,7 @@ const CreatePost = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isObjectEmpty(formData)) {
-      triggerError("Please fill all fields.");
+      triggerError(t("error_fill_all_fields"));
     } else {
       setErrorMessage("");
       mutate(formData, {
@@ -53,10 +55,10 @@ const CreatePost = () => {
                   <div className="card-body">
                     <div className="pt-4 pb-2 text-center">
                       <h5 className="card-title fs-4 fw-bold text-primary">
-                        Create Post
+                        {t("create_post")}
                       </h5>
                       <p className="text-muted small">
-                        Fill in the details to create a post
+                        {t("fill_details_create_post")}
                       </p>
                     </div>
                     {errorMessage ? (
@@ -86,17 +88,17 @@ const CreatePost = () => {
                       ))}
                       <div className="col-12">
                         <FormButton
-                          text={isLoading ? <Spinner /> : "Create Post"}
+                          text={isLoading ? <Spinner /> : t("create_post_button")}
                         />
                       </div>
                       <div className="col-12">
                         <p className="small mb-0">
-                          Want to go back?{" "}
+                          {t("want_to_go_back")}{" "}
                           <Link
                             to="/posts"
                             className="text-decoration-none text-primary"
                           >
-                            View all posts
+                            {t("view_all_posts")}
                           </Link>
                         </p>
                       </div>

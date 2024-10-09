@@ -1,8 +1,8 @@
 {
-    "login_form_title": "Log In",
-    "login_form_description": "Enter your credentials to access your account",
+    "form_title": "Log In",
+    "form_description": "Enter your credentials to access your account",
     "dont_have_account": "Don't have an account?",
     "create_an_account": "Create an account",
     "empty_form_message": "Please fill all fields.",
-    "login_button": "Login"
+    "button": "Login"
 }

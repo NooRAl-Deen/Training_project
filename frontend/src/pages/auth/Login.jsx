@@ -10,7 +10,6 @@ import useAuthMutation from "../../hooks/queries/auth/useAuthMutation";
 import { handleAxiosError } from "../../error-handling/AxiosErrorsHandlers";
 import Spinner from "../../components/Spinner";
 import useCurrentToken from "../../hooks/useCurrentToken";
-import {translationKeys} from "../../helpers/TranslitionKeys";
 import { useTranslation } from "react-i18next";
 
 const Login = () => {
@@ -31,11 +30,11 @@ const Login = () => {
     password_prop: formData.password,
   };
   const { token, setToken } = useCurrentToken();
-  const { t } = useTranslation();
+  const { t } = useTranslation('auth\\login');
   const handleLogin = (e) => {
     e.preventDefault();
     if (isObjectEmpty(formData)) {
-      triggerError(t(translationKeys.EMPTY_FORM_MESSAGE_KEY));
+      triggerError(t('empty_form_message'));
     } else {
       setErrorMessage("");
       mutate(transformedData, {
@@ -63,10 +62,10 @@ const Login = () => {
                   <div className="card-body">
                     <div className="pt-4 pb-2 text-center">
                       <h5 className="card-title fs-4 fw-bold text-primary">
-                        {t(translationKeys.LOGIN_FORM_TITLE_KEY)}
+                        {t('form_title')}
                       </h5>
                       <p className="text-muted small">
-                        {t(translationKeys.LOGIN_FORM_DESCRIPTION_KEY)}
+                        {t('form_description')}
                       </p>
                     </div>
                     {errorMessage ? (
@@ -87,16 +86,16 @@ const Login = () => {
                         </div>
                       ))}
                       <div className="col-12">
-                        <FormButton text={isLoading ? <Spinner /> : t(translationKeys.LOGIN_BUTTON_KEY)} />
+                        <FormButton text={isLoading ? <Spinner /> : t('button')} />
                       </div>
                       <div className="col-12">
                         <p className="small mb-0">
-                          {t(translationKeys.DONT_HAVE_ACCOUNT_KEY)}
+                          {t('dont_have_account')}
                           <Link
                             to="/register"
                             className="text-decoration-none text-primary"
                           >
-                            {t(translationKeys.CREATE_AN_ACCOUNT_KEY)}
+                            {t('create_an_account')}
                           </Link>
                         </p>
                       </div>

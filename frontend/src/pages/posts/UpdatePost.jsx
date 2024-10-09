@@ -11,14 +11,17 @@ import useError from "../../hooks/useError";
 import useUpdateMutation from "../../hooks/queries/useUpdateMutation";
 import { handleAxiosError } from "../../error-handling/AxiosErrorsHandlers";
 import useFetchData from "../../hooks/queries/useFetchData";
+import { useTranslation } from 'react-i18next';
 
 const UpdatePost = () => {
+  const { t } = useTranslation('posts\\update');
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const { errorMessage, setErrorMessage, triggerError } = useError();
   const { mutate, isLoading } = useUpdateMutation(`/posts/${id}`);
   const { data, error, isLoading: isFetching } = useFetchData(`/posts/${id}`);
+
   useEffect(() => {
     if (data) {
       setFormData({
@@ -27,9 +30,10 @@ const UpdatePost = () => {
       });
     }
     if (error) {
-      triggerError("Failed to fetch post data.");
+      triggerError(t("fetch_post_error"));
     }
   }, [data, error, triggerError]);
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -37,7 +41,7 @@ const UpdatePost = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isObjectEmpty(formData)) {
-      triggerError("Please fill all fields.");
+      triggerError(t("fill_all_fields"));
     } else {
       setErrorMessage("");
       mutate(formData, {
@@ -63,10 +67,10 @@ const UpdatePost = () => {
                   <div className="card-body">
                     <div className="pt-4 pb-2 text-center">
                       <h5 className="card-title fs-4 fw-bold text-primary">
-                        Update Post
+                        {t("update_post")}
                       </h5>
                       <p className="text-muted small">
-                        Fill in the details to update the post
+                        {t("fill_details_to_update")}
                       </p>
                     </div>
                     {errorMessage ? (
@@ -96,17 +100,17 @@ const UpdatePost = () => {
                       ))}
                       <div className="col-12">
                         <FormButton
-                          text={isLoading ? <Spinner /> : "Update Post"}
+                          text={isLoading ? <Spinner /> : t("update_post_button")}
                         />
                       </div>
                       <div className="col-12">
                         <p className="small mb-0">
-                          Want to go back?{" "}
+                          {t("want_to_go_back")}
                           <Link
                             to="/posts"
                             className="text-decoration-none text-primary"
                           >
-                            View all posts
+                            {t("view_all_posts")}
                           </Link>
                         </p>
                       </div>

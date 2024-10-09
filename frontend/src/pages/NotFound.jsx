@@ -1,16 +1,16 @@
 import { useTranslation } from "react-i18next";
-import { translationKeys } from "../helpers/TranslitionKeys";
+
 
 const NotFound = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('not-found');
   return (
     <div>
       <div className="container mt-5">
         <h2 className="text-center">
-          {t(translationKeys.NOT_FOUND_TITLE_KEY)}
+          {t('not_found_title')}
         </h2>
         <p className="text-center">
-          {t(translationKeys.NOT_FOUND_DESCRIPTION_KEY)}
+          {t('not_found_description')}
         </p>
       </div>
     </div>

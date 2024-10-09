@@ -1,0 +1,10 @@
+{
+    "brand_name": "MyApp",
+    "home_link": "Home",
+    "about_link": "About",
+    "profile_link": "Profile",
+    "posts_link": "Posts",
+    "login_link": "Login",
+    "register_link": "Register",
+    "logout": "Logout"
+}

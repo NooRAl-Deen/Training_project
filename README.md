@@ -32,56 +32,69 @@ Make sure you have the following installed on your system:
 
 3. Activate the virtual environment:
 
-```
-On Windows: dev_env\Scripts\activate
+   ```
+   On Windows: dev_env\Scripts\activate
 
-On macOS/Linux: source dev_env/bin/activate
-```
+   On macOS/Linux: source dev_env/bin/activate
+   ```
+4. Make your [env]
+   ```
+   On Windows: copy .env.example .env
 
-4. Install the required packages:
+   On macOS/Linux: cp .env.example .env
+   ```
+5. Install the required packages:
 
    ```
    pip install -r requirements.txt
    ```
 
-5. Set up the database:
+6. Set up the database:
 
-```bash
-flask db init
-flask db upgrade
-```
+   ```
+   flask db init
+   flask db upgrade
+   ```
 
-6. Run the Flask application:
+7. Run the Flask application:
 
-```bash
-python run.py
-```
+   ```
+   python run.py
+   ```
 
-7. Frontend Setup
+8. Frontend Setup
    Prerequisites
    Make sure you have the following installed on your system:
 
-```
-Node.js (which includes npm)
-```
+   ```
+   Node.js (which includes npm)
+   ```
 
-8. Navigate to the frontend directory:
+9. Navigate to the frontend directory:
 
-```
-cd frontend
-cd ../frontend [if you are in backend folder]
-npm install
-```
+   ```
+   cd frontend
+   cd ../frontend [if you are in backend folder]
+   npm install
+   ```
 
-9. Start the React application:
 
-```
-npm run dev
-```
+   10. Make your [env]
 
-10. Running the Application
+   ```
+   On Windows: copy .env.example .env
 
-```
-Frontend: http://localhost:3000
-Backend: http://localhost:5000
-```
+   On macOS/Linux: cp .env.example .env
+   ```
+
+   11. Start the React application:
+
+   ```
+   npm run dev
+   ```
+
+   12. Running the Application
+   ```
+   Frontend: http://localhost:3000
+   Backend: http://localhost:5000
+   ```

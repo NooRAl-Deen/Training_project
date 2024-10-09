@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
 import useCurrentToken from "../hooks/useCurrentToken";
 import LogoutButton from "./LogoutButton";
+import { useTranslation } from "react-i18next";
 
 const NavComponent = () => {
   const { token } = useCurrentToken();
+  const { t } = useTranslation('navbar')
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light header shadow-sm">
       <div className="container-fluid">
         <Link className="navbar-brand fw-bold text-primary" to="/">
-          MyApp
+          {t('brand_name')}
         </Link>
         <button
           className="navbar-toggler"
@@ -25,44 +27,48 @@ const NavComponent = () => {
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <Link className="nav-link active" to="/">
-                Home
+              {t('home_link')}
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/about">
-                About
+              {t('about_link')}
               </Link>
             </li>
-          </ul>
-          <ul className="navbar-nav">
             {token ? (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/profile">
-                    Profile
+                  {t('profile_link')}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/posts">
-                    Posts
+                  {t('posts_link')}
                   </Link>
                 </li>
-                <LogoutButton />
+                
               </>
-            ) : (
+            ) : ''}
+          </ul>
+          <ul className="navbar-nav">
+          {token ? <LogoutButton /> : 
+            (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">
-                    Login
+                  {t('login_link')}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/register">
-                    Register
+                  {t('register_link')}
                   </Link>
                 </li>
               </>
-            )}
+            )
+          }
+          
           </ul>
         </div>
       </div>
