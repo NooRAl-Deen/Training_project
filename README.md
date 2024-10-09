@@ -52,8 +52,11 @@ Make sure you have the following installed on your system:
 6. Set up the database:
 
    ```
+   cd app
    flask db init
+   flask db migrate -m "Initial migration"
    flask db upgrade
+   cd ..
    ```
 
 7. Run the Flask application:

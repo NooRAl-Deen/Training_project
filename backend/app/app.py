@@ -5,7 +5,6 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
-from datetime import timedelta
 from flask_cors import CORS
 from config import Config
 
@@ -22,11 +21,7 @@ jwt_manager = JWTManager()
 def create_app():
 
     app = Flask(__name__)
-    CORS(app, resources={r"/api/*": {
-    "origins": "http://127.0.0.1:5173",
-    "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Headers"],
-    "supports_credentials": True
-}})
+    CORS(app)
 
     app.config.from_object(Config)
 

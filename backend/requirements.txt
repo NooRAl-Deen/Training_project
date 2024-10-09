@@ -25,6 +25,7 @@ marshmallow-sqlalchemy==1.1.0
 mysqlclient==2.2.4
 packaging==24.1
 PyJWT==2.9.0
+python-dotenv==1.0.1
 SQLAlchemy==2.0.35
 typing_extensions==4.12.2
 Werkzeug==3.0.4
