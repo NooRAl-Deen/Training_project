@@ -1,36 +1,23 @@
 import { Route } from "react-router-dom";
-import CreatePost from "../pages/posts/CreatePost";
-import PostList from "../pages/posts/PostList";
-import PrivateRoute from "../components/PrivateRoute";
-import UpdatePost from "../pages/posts/UpdatePost";
+import PrivateRoute from "@/components/PrivateRoute";
+import { lazy } from "react";
+import { PostsProvider } from "@/pages/posts/contexts/PostsContext";
+
+const Posts = lazy(() => import("@/pages/posts/pages/Posts"));
 
 const PostRoutes = () => {
   return (
     <>
-      <Route
-        path="/posts"
-        element={
-          <PrivateRoute>
-            <PostList />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/post-create"
-        element={
-          <PrivateRoute>
-            <CreatePost />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/post-update/:id"
-        element={
-          <PrivateRoute>
-            <UpdatePost />
-          </PrivateRoute>
-        }
-      />
+      <Route element={<PrivateRoute allowedRoutes={["admin", "user"]} />}>
+        <Route
+          path="/profile/posts"
+          element={
+            <PostsProvider>
+              <Posts />
+            </PostsProvider>
+          }
+        />
+      </Route>
     </>
   );
 };

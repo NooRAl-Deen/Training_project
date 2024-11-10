@@ -1,0 +1,35 @@
+.imagesPreviewContainer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    // margin-bottom: 5px;
+    width: 100%;
+
+
+    .imagesPreview {
+        
+        position: relative;
+
+        .img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .closeButton {
+            background-color: var(--info-main);
+            color: #FFF;
+            border-radius: 50%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 20px;
+
+            &:hover {
+                background-color:var(--error-main)
+            }
+        }
+    }
+    
+}

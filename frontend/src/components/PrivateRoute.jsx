@@ -1,10 +1,22 @@
-import { Navigate } from "react-router-dom";
-import useCurrentToken from "../hooks/useCurrentToken";
+import { Navigate, Outlet } from "react-router-dom";
+import UnAuthorized from "@/pages/Unauthorized";
+import useAuth from "@/hooks/useAuth";
 
-const PrivateRoute = ({ children }) => {
-  const { token } = useCurrentToken();
+const PrivateRoute = ({ children, allowedRoutes }) => {
+  const { user } = useAuth();
+  const hasAccess = user?.roles?.some((role) => allowedRoutes.includes(role));
 
-  return token ? children : <Navigate to="/" replace={true} />;
+  if (!user || Object.keys(user).length === 0) {
+    return <Navigate to="/login" replace={true} />;
+  }
+
+  if (!hasAccess) {
+    return <UnAuthorized />;
+  }
+
+
+
+  return <Outlet/>;
 };
 
 export default PrivateRoute;

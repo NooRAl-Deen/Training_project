@@ -18,10 +18,11 @@ ma = Marshmallow()
 jwt_manager = JWTManager()
 
 
+
 def create_app():
 
-    app = Flask(__name__)
-    CORS(app)
+    app = Flask(__name__, static_folder='../static')
+    CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5173"])
 
     app.config.from_object(Config)
 
@@ -31,7 +32,10 @@ def create_app():
     bcrypt.init_app(app)
     login_manager.init_app(app)
     ma.init_app(app)
+    # csrf.init_app(app)
     jwt_manager.init_app(app)
+
+    
     
 
     # Import Blueprints
@@ -40,6 +44,7 @@ def create_app():
     from app.blueprints.auth.routes.api_routes import auth_api
     from app.blueprints.post.routes.api_routes import post_api
     from app.blueprints.user.routes.api_routes import user_api
+    from app.blueprints.profile.views.api import profile_api
     from app.blueprints.errors.errors import errors, create_error_handlers
 
     # Register Blueprints
@@ -48,11 +53,14 @@ def create_app():
     app.register_blueprint(auth_api)
     app.register_blueprint(user_api)
     app.register_blueprint(post_api)
+    app.register_blueprint(profile_api)
     app.register_blueprint(errors)
     create_error_handlers(app)
 
     # Import Models
     from app.blueprints.auth.models.user import User
+    from app.blueprints.auth.models.role import Role
+    from app.blueprints.auth.models.role import UserRole
     from app.blueprints.auth.models.token_block_list import TokenBlockList
     from app.blueprints.post.models.post import Post
     return app

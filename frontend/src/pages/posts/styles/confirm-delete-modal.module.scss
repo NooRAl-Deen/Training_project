@@ -1,0 +1,117 @@
+.confirmContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+
+    .boxDialog {
+        background-color: var(--background-paper);
+        width: 500px;
+        height: 370px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+
+
+        .boxDialogHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                letter-spacing: 2px;
+            }
+
+            .close {
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--error-main);
+                }
+            }
+        }
+
+        .boxDialogContent {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+
+            .boxDialogContentIcon {
+                color: var(--error-main);
+                font-size: 8rem;
+            }
+
+            .boxDialogContentText {
+                text-align: center;
+                padding: 1rem;
+
+                .titleText {
+                    font-size: 18px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+
+                }
+            }
+
+            
+        }
+
+        .boxDialogActions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem;
+            gap: 10px;
+
+            .boxDialogActionsIcon {
+                border-radius: 5px;
+                padding: 8px 20px;
+                font-size: 18px;
+                text-transform: capitalize;
+                transition: background-color 0.3s ease, transform 0.2s ease, color 0.2s ease;
+                cursor: pointer;
+            }
+
+            .cancel {
+                background-color: var(--divider);
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+
+            .confirm {
+                background-color: var(--error-main);
+                color: var(--text);
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .boxDialog {
+        width: 90%;
+        height: auto;
+    }
+
+    .boxDialogHeader {
+        padding: 0.5rem;
+    }
+
+    .boxDialogContentText {
+        padding: 0.5rem;
+    }
+
+    .boxDialogActions {
+        padding: 0.5rem;
+    }
+}

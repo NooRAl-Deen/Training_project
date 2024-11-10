@@ -1,19 +1,19 @@
 from app.app import ma
 from .models.post import Post
 from marshmallow import validate, fields
-from marshmallow.fields import String, Integer
+from marshmallow.fields import String, Integer, Raw, DateTime, List
 from app.blueprints.auth.user_schema import UserSchema
 
 class PostSchema(ma.SQLAlchemyAutoSchema):
-    title = String(required=True, validate=[validate.Length(min=3), validate.Regexp('^[A-Za-z0-9 ]*$')], error_messages={
-        "required": "The title is required.",
-        "invalid": "The title is invalid and needs to be a string or numbers."
-    })
-    description = String(validate=[validate.Regexp('^[A-Za-z0-9 ]*$')], error_messages={
-        "invalid": "The description is invalid and needs to be a string or numbers."
+    images = List(Raw(type='file', data_key="images", allow_none=True))
+    description = String(validate=[validate.Regexp(r'^[\w\s\U00010000-\U0010ffff]*$', flags=0)],
+    error_messages={
+        "invalid": "The description is invalid. It should only contain letters, numbers, spaces, or emojis."
     })
 
-    user = ma.Nested(UserSchema, only=('email', 'username'))
+    created_at = DateTime(dump_only=True, data_key="createdAt")
+
+    user = ma.Nested(UserSchema, only=('email', 'username', 'profile_pic'))
 
     class Meta:
         model = Post

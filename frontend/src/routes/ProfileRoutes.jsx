@@ -1,18 +1,15 @@
 import { Route } from "react-router-dom";
-import Profile from "../pages/Profile";
-import PrivateRoute from "../components/PrivateRoute";
+import { lazy } from "react";
+import PrivateRoute from "@/components/PrivateRoute";
+
+const Profile = lazy(() => import("@/pages/profile/pages/Profile"));
 
 const ProfileRoutes = () => {
   return (
     <>
-      <Route
-        path="/profile"
-        element={
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        }
-      />
+      <Route element={<PrivateRoute allowedRoutes={["admin", "user"]} />}>
+        <Route index element={<Profile />} />
+      </Route>
     </>
   );
 };
