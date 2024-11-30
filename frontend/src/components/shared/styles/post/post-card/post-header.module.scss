@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  align-items: center;
+
+  .subheader {
+    cursor: pointer;
+    color: var(--text-secondary);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+
+}
+
+
+
+.divider {
+  border-color: var(--divider);
+
+  opacity: 1;
+}

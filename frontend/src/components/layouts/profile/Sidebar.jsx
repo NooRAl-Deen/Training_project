@@ -17,7 +17,7 @@ import {
   AccountCircle as AccountCircleIcon,
   Article as ArticleIcon,
 } from "@mui/icons-material";
-
+import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 const drawerWidth = 240;
 
@@ -76,8 +76,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const menuItems = [
+  { text: "News", icon: HomeIcon, to: "/profile/news" },
+  { text: "My Posts", icon: ArticleIcon, to: "/profile/posts" },
   { text: "Profile", icon: AccountCircleIcon, to: "/profile", end: true },
-  { text: "Posts", icon: ArticleIcon, to: "/profile/posts" },
 ];
 
 const Sidebar = ({ open, handleDrawerClose }) => {
@@ -108,6 +109,7 @@ const Sidebar = ({ open, handleDrawerClose }) => {
                   px: 2.5,
                   "&.active": {
                     color: theme.palette.primary.main,
+                    backgroundColor: theme.palette.divider
                   },
                   justifyContent: open ? "initial" : "center",
                 },

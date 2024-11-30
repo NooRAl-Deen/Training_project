@@ -1,0 +1,88 @@
+.modalBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 680px; 
+  max-height: 90vh; 
+  background-color: var(--background-paper);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; 
+}
+
+
+.modalBoxHeader {
+  position: sticky; 
+  top: 0; 
+  background-color: var(
+    --background-paper
+  ); 
+  z-index: 10; 
+  padding: 16px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentsSection {
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  .userDetails {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .commentContent {
+    display: flex;
+    flex-direction: column;
+
+    .text {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+.addCommentSection {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--background-paper); 
+  z-index: 10; 
+  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+.modalBox::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.modalBox::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 4px;
+}
+
+.modalBox::-webkit-scrollbar-thumb:hover {
+  background-color: #555; 
+}
+
+.modalBox::-webkit-scrollbar-track {
+  background-color: #f1f1f1; 
+  border-radius: 4px;
+}
+
+.comment {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.comment:last-child {
+  border-bottom: none; 
+}

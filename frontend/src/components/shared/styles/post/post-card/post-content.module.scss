@@ -1,0 +1,14 @@
+.media {
+	height: 400px;
+	background-position: center;
+	background-size: cover;
+}
+
+.content {
+	color: var(--text-secondary);
+}
+.carouselImage {
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}

@@ -1,0 +1,37 @@
+.profileActivity {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--background-paper);
+  box-shadow: var(--Paper-shadow);
+  background-image: var(--Paper-overlay);
+  border-radius: 20px;
+
+  .profileActivityHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .profileActivityHeaderIcon {
+      font-size: 30px;
+      color: var(--primary-main);
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .activities {
+    .activity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+
+      .activityIcon {
+        font-size: 35px;
+      }
+    }
+  }
+}

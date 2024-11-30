@@ -18,7 +18,7 @@ html {
   --warning-main: #ff9800;
   --divider: rgba(0, 0, 0, 0.38);
   --text: rgba(0, 0, 0, 0.38);
-
+  --Paper-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
 }
 
@@ -29,13 +29,15 @@ html {
   --background-default: #121212;
   --background-paper: #1e1e1e;
   --text-primary: #e0e0e0;
-  --text-secondary: #e0e0e0;
+  --text-secondary: #b0b0b0;
   --success-main: #27ae60;
   --error-main: #e74c3c;
   --info-main: #3498db;
   --warning-main: #f39c12;
-  --divider: rgba(255, 255, 255, 0.38);
+  --divider: rgba(255, 255, 255, 0.5);
   --text: #e0e0e0;
+  --Paper-overlay: linear-gradient(rgba(255, 255, 255, 0.051), rgba(255, 255, 255, 0.051));
+  --Paper-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .bg-gradient {

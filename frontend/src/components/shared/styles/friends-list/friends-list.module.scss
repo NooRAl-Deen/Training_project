@@ -1,0 +1,29 @@
+.friendsListContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+
+  .friendListHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .friendListHeaderIcon {
+      font-size: 30px;
+      color: var(--primary-main);
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .friendsList {
+    .friendItem {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+    }
+  }
+}

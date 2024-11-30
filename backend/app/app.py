@@ -45,6 +45,10 @@ def create_app():
     from app.blueprints.post.routes.api_routes import post_api
     from app.blueprints.user.routes.api_routes import user_api
     from app.blueprints.profile.views.api import profile_api
+    from app.blueprints.comment.views.api import comments_api
+    from app.blueprints.like.views.api import likes_api
+    from app.blueprints.timeline.views.api import timeline_api
+    from app.blueprints.reply.views.api import replies_api
     from app.blueprints.errors.errors import errors, create_error_handlers
 
     # Register Blueprints
@@ -54,6 +58,10 @@ def create_app():
     app.register_blueprint(user_api)
     app.register_blueprint(post_api)
     app.register_blueprint(profile_api)
+    app.register_blueprint(comments_api)
+    app.register_blueprint(likes_api)
+    app.register_blueprint(timeline_api)
+    app.register_blueprint(replies_api)
     app.register_blueprint(errors)
     create_error_handlers(app)
 
@@ -63,4 +71,7 @@ def create_app():
     from app.blueprints.auth.models.role import UserRole
     from app.blueprints.auth.models.token_block_list import TokenBlockList
     from app.blueprints.post.models.post import Post
+    from app.blueprints.comment.models.comment import Comment
+    from app.blueprints.like.models.like import Like
+    from app.blueprints.reply.models.reply import Reply
     return app

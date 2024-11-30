@@ -13,7 +13,7 @@ const AppLayout = lazy(() => import("@/components/layouts/app/AppLayout"));
 const ProfileLayout = lazy(() =>
   import("@/components/layouts/profile/ProfileLayout")
 );
-const NotFound = lazy(() => import("@/pages/NotFound"));
+const NotFound = lazy(() => import("@/features/NotFound"));
 const Spinner = lazy(() => import("@/components/ui/Spinner"));
 
 const mainRoutes = MainRoutes();

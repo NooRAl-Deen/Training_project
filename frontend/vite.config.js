@@ -7,8 +7,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@profile': path.resolve(__dirname, './src/pages/profile'),
-      '@posts': path.resolve(__dirname, './src/pages/posts'),
+      '@styles': path.resolve(__dirname, './src/components/shared/styles'),
+      '@profile': path.resolve(__dirname, './src/features/profile'),
+      '@posts': path.resolve(__dirname, './src/features/posts'),
     },
   },
+  server: {
+    host: "127.0.0.1",
+    port: 5173
+  }
 });

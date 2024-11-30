@@ -86,7 +86,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         model = User
         load_instance = True
         include_relationships = True
-        exclude = ["id", "password"]
+        include_fk = True
+        exclude = ["password"]
 
 
 class UserCreateSchema(UserSchema):

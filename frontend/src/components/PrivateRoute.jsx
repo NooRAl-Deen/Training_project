@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import UnAuthorized from "@/pages/Unauthorized";
+import UnAuthorized from "@/features/Unauthorized";
 import useAuth from "@/hooks/useAuth";
 
 const PrivateRoute = ({ children, allowedRoutes }) => {

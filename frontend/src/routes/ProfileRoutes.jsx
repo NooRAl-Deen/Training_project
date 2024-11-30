@@ -2,7 +2,7 @@ import { Route } from "react-router-dom";
 import { lazy } from "react";
 import PrivateRoute from "@/components/PrivateRoute";
 
-const Profile = lazy(() => import("@/pages/profile/pages/Profile"));
+const Profile = lazy(() => import("@/features/profile/pages/Profile"));
 
 const ProfileRoutes = () => {
   return (

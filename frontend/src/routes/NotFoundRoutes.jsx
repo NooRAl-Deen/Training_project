@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import { lazy } from "react";
 
-const NotFound = lazy(() => import("@/pages/NotFound"));
+const NotFound = lazy(() => import("@/features/NotFound"));
 
 const NotFoundRoutes = () => {
   return (

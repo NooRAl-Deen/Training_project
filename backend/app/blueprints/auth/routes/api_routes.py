@@ -1,20 +1,20 @@
 from datetime import timedelta
 import os
-from flask import Blueprint, json, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy.orm import joinedload
-
 from ..models.role import Role
 from ..user_schema import UserCreateSchema, UserSchema
 from ....app import db, jwt_manager
 from marshmallow import ValidationError
 from ..models.user import User
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt, get_csrf_token, jwt_required, get_jwt_identity, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
-from app.utils.helpers import add_token_to_database, revoke_token, is_token_revoked
+from app.utils.helpers import add_token_to_database, revoke_token
+
+
 auth_api = Blueprint('auth_api', __name__, url_prefix='/api')
 
 @auth_api.route('/register', methods=['POST'])
 def register():
-    print(request.get_json())
     user_data = request.get_json()
 
     if not user_data:
@@ -64,11 +64,11 @@ def login():
     
     schema = UserSchema()
     user_data = schema.dump(user)
-    print(user_data)
     add_token_to_database(access_token)
     add_token_to_database(refresh_token)
     roles = [role['slug'] for role in user_data.get('roles', [])]
     minimal_user_data = {
+        'id': user_data.get('id'),
         'email': user_data.get('email'),
         'username': user_data.get('username'), 
         'roles':roles,
@@ -120,24 +120,10 @@ def revoke_refresh():
     revoke_token(jti, user_id)
     return {'msg': 'Refresh token revoked'}
 
-
-# @jwt_manager.token_in_blocklist_loader
-# def check_if_token_revoked(jwt_headers, jwt_payload):
-#     try:
-#         return is_token_revoked(jwt_payload)
-#     except Exception:
-#         return True
-    
-
 @jwt_manager.user_lookup_loader
 def load_user(jwt_headers, jwt_payload):
     user_id = jwt_payload['user_id']
     return User.query.get(user_id)
-
-
-
-
-
 
 @auth_api.errorhandler(ValidationError)
 def handle_marshmallow_error(e):

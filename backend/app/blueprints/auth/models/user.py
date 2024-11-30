@@ -3,6 +3,9 @@ from datetime import datetime, timezone
 from app.app import db, bcrypt, login_manager
 from flask_login import UserMixin
 from ...post.models.post import Post
+from ...comment.models.comment import Comment
+from ...reply.models.reply import Reply
+from ...like.models.like import Like
 from .role import Role, UserRole
 
 
@@ -28,6 +31,9 @@ class User(db.Model, UserMixin):
     date_of_birth = db.Column(db.DateTime, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     posts = db.relationship("Post", backref="user", lazy=True, cascade="all, delete")
+    comments = db.relationship("Comment", backref="user", lazy=True, cascade="all, delete")
+    replies = db.relationship("Reply", backref="user", lazy=True, cascade="all, delete")
+    likes = db.relationship("Like", backref="user", lazy=True, cascade="all, delete")
     roles = db.relationship("Role", secondary="user_roles", back_populates="users")
 
     @property

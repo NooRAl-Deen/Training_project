@@ -1,0 +1,18 @@
+.divider {
+    border-color: var(--warning-main);
+    opacity: 1;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 5px !important;
+    .button {
+      display: flex;
+      gap: 5px;
+      font-size: 15px;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+  }

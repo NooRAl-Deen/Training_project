@@ -6,7 +6,11 @@ from app.app import db
 from app.utils.images_validation import allowed_file, generate_unique_filename
 from ..models.post import Post
 from ..post_schema import PostSchema
+from ...comment.models.comment import Comment
+from ...comment.schema.comment import CommentSchema
+from ...like.models.like import Like
 from werkzeug.utils import secure_filename
+from sqlalchemy import asc
 
 post_api = Blueprint("post_api", __name__, url_prefix="/api/posts")
 
@@ -22,13 +26,29 @@ def get_user_posts():
             .order_by(Post.id.desc())
             .paginate(page=page, per_page=5)
         )
-        print(posts.total)
-        print(posts.pages)
-        print(posts.page)
         schema = PostSchema()
+        posts_data = schema.dump(posts.items, many=True)
+        for post, post_data in zip(posts, posts_data):
+            recent_comments = (
+                Comment.query.filter_by(post_id=post.id)
+                .order_by(Comment.created_at)
+                .limit(3)
+                .all()
+            )
+            # recent_comments = sorted(recent_comments, key=lambda comment: comment.created_at)
+
+            comment_schema = CommentSchema(many=True)
+            post_data["comments"] = comment_schema.dump(recent_comments)
+            post_data["total_comment_count"] = Comment.query.filter_by(
+                post_id=post.id
+            ).count()
+            post_data["total_likes_count"] = Like.query.filter_by(post_id=post.id).count()
+            post_data["isLiked"] = bool(
+                Like.query.filter_by(post_id=post.id, user_id=user_id).first()
+            )
         return {
             "msg": "User posts",
-            "posts": schema.dump(posts, many=True),
+            "posts": posts_data,
             "total_pages": posts.pages,
             "current_page": posts.page,
         }, 200
@@ -39,11 +59,42 @@ def get_user_posts():
 @post_api.route("/<int:id>")
 @jwt_required()
 def get_post(id):
-    post = Post.query.filter_by(id=id).first()
-    if not post:
-        return {"msg": f"No post with id : {id}"}
-    schema = PostSchema()
-    return {"msg": f"Post with id : {id}", "posts": schema.dump(post)}
+    user_id = get_jwt_identity()
+    try:
+
+        post = Post.query.filter_by(id=id).first()
+
+        if not post:
+            return jsonify({"msg": f"No post with id : {id} for user {user_id}"}), 404
+        
+        # if post.user_id != user_id:
+        #     return {"msg": "Permission denied"}, 403
+
+        post_schema = PostSchema()
+        post_data = post_schema.dump(post)
+
+        recent_comments = (
+            Comment.query.filter_by(post_id=post.id)
+            .order_by(Comment.created_at.desc())
+            .limit(3)
+            .all()
+        )
+
+        comment_schema = CommentSchema(many=True)
+        post_data["comments"] = comment_schema.dump(recent_comments)
+
+        post_data["total_comment_count"] = Comment.query.filter_by(
+            post_id=post.id
+        ).count()
+        post_data["total_likes_count"] = Like.query.filter_by(post_id=post.id).count()
+        post_data["isLiked"] = bool(
+            Like.query.filter_by(post_id=post.id, user_id=user_id).first()
+        )
+
+        return {"msg": f"Post with id : {id}", "post": post_data}, 200
+
+    except Exception as e:
+        return jsonify({"msg": "Error fetching post", "error": str(e)}), 500
 
 
 @post_api.route("/", methods=["POST"])
@@ -57,7 +108,6 @@ def create_post():
 
     if "files[]" in request.files:
         files = request.files.getlist("files[]")
-        print(files)
 
         for file in files:
             if file and allowed_file(file.filename):
@@ -65,7 +115,6 @@ def create_post():
                 unique_filename = generate_unique_filename(filename)
                 upload_path = os.path.join("static/uploads", unique_filename)
                 file.save(upload_path)
-                print(upload_path)
                 upload_paths.append(upload_path)
     try:
         post_data = schema.load(
@@ -80,7 +129,6 @@ def create_post():
     post = Post(description=post_data.description, images=post_data.images)
     post.user_id = user_id
 
-    print(post.description)
 
     db.session.add(post)
     db.session.commit()
