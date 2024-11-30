@@ -1,10 +1,10 @@
 from app.app import ma
 from marshmallow import validate, validates, ValidationError
 from marshmallow.fields import String, DateTime, Raw, Date
-from .role_schema import RoleSchema
+from .role import RoleSchema
 
 
-from .models.user import User
+from ..models.user import User
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
@@ -79,7 +79,6 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
             raise ValidationError(f"Phone number {phone_number} is already exists.")
 
     created_at = DateTime(dump_only=True, data_key="createdAt")
-    # posts = ma.Nested('app.blueprints.post.post_schema.PostSchema', many=True, only=('title', 'description'))
     roles = ma.Nested(RoleSchema, many=True)
 
     class Meta:

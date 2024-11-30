@@ -5,7 +5,7 @@ from ..models.comment import Comment
 from app.app import db
 from sqlalchemy import asc
 from app.blueprints.post.models.post import Post
-from ..schema.comment import CommentSchema
+from ..schemas.comment import CommentSchema
 
 comments_api = Blueprint(
     "comments_api", __name__, url_prefix="/api/posts/<int:post_id>/comments"
@@ -45,7 +45,6 @@ def get_comment(post_id, comment_id):
     if not comment:
         return {"msg": "Comment not found."}, 404
 
-    print(comment.replies)
     comment_schema = CommentSchema()
 
     return {

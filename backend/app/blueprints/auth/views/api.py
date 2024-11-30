@@ -3,7 +3,7 @@ import os
 from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy.orm import joinedload
 from ..models.role import Role
-from ..user_schema import UserCreateSchema, UserSchema
+from ..schemas.user import UserCreateSchema, UserSchema
 from ....app import db, jwt_manager
 from marshmallow import ValidationError
 from ..models.user import User

@@ -18,7 +18,6 @@ def add_reply(comment_id):
     request_data['user_id'] = user_id
     request_data['comment_id'] = comment.id
 
-    print(request_data)
 
     reply = Reply(**request_data)
 

@@ -3,7 +3,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from marshmallow import ValidationError
 from werkzeug.utils import secure_filename
 from app.blueprints.auth.models.user import User
-from app.blueprints.auth.user_schema import UserSchema
+from app.blueprints.auth.schemas.user import UserSchema
 import os
 from app.utils.images_validation import allowed_file, generate_unique_filename
 from app.app import db
@@ -46,11 +46,9 @@ def update_profile():
         profile_pic.save(upload_path)
 
         user.profile_pic = upload_path
-    print("okkk")
+
 
     updated_user = schema.load(request.form, partial=True)
-    print(updated_user)
-    print(updated_user.username)
     user.username = updated_user.username if updated_user.username else user.username
     user.email = updated_user.email if updated_user.email else user.email
     user.phone_number = (
@@ -61,8 +59,6 @@ def update_profile():
     user.date_of_birth = (
         updated_user.date_of_birth if updated_user.date_of_birth else user.date_of_birth
     )
-
-    print(type(request.form))
 
     db.session.commit()
 

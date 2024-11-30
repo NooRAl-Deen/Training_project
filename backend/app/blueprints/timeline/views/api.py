@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.blueprints.post.models.post import Post
-from app.blueprints.post.post_schema import PostSchema
+from app.blueprints.post.schemas.post import PostSchema
 from ...comment.models.comment import Comment
-from ...comment.schema.comment import CommentSchema
+from ...comment.schemas.comment import CommentSchema
 from ...like.models.like import Like
 
 

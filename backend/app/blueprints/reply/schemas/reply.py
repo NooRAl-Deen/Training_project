@@ -1,7 +1,7 @@
 from app.app import ma
 from marshmallow.fields import String, validate, DateTime
 from ...reply.models.reply import Reply
-from app.blueprints.auth.user_schema import UserSchema
+from app.blueprints.auth.schemas.user import UserSchema
 
 class ReplySchema(ma.SQLAlchemyAutoSchema):
     text = String(required=True, validate=[validate.Regexp(r'^[\w\s\U00010000-\U0010ffff]*$', flags=0)],

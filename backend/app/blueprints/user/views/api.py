@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
 from app.app import db
 from app.blueprints.auth.models.user import User
-from app.blueprints.auth.user_schema import UserCreateSchema, UserSchema
+from app.blueprints.auth.schemas.user import UserCreateSchema, UserSchema
 from app.utils.decorators import auth_role
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')

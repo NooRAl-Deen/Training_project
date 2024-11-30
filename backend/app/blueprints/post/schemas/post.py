@@ -1,9 +1,9 @@
 from app.app import ma
-from .models.post import Post
-from marshmallow import validate, fields
-from marshmallow.fields import String, Integer, Raw, DateTime, List
-from app.blueprints.auth.user_schema import UserSchema
-from app.blueprints.comment.schema.comment import CommentSchema
+from ..models.post import Post
+from marshmallow import validate
+from marshmallow.fields import String, Raw, DateTime, List
+from app.blueprints.auth.schemas.user import UserSchema
+
 
 
 class PostSchema(ma.SQLAlchemyAutoSchema):
@@ -18,7 +18,6 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
     created_at = DateTime(dump_only=True, data_key="createdAt")
 
     user = ma.Nested(UserSchema, only=("id", "email", "username", "profile_pic"))
-    # comments = ma.Nested(CommentSchema, many=True, only=("text", "created_at", "user"))
 
     class Meta:
         model = Post

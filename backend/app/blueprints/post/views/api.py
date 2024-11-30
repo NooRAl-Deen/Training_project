@@ -5,12 +5,11 @@ from marshmallow import ValidationError
 from app.app import db
 from app.utils.images_validation import allowed_file, generate_unique_filename
 from ..models.post import Post
-from ..post_schema import PostSchema
+from ..schemas.post import PostSchema
 from ...comment.models.comment import Comment
-from ...comment.schema.comment import CommentSchema
+from ...comment.schemas.comment import CommentSchema
 from ...like.models.like import Like
 from werkzeug.utils import secure_filename
-from sqlalchemy import asc
 
 post_api = Blueprint("post_api", __name__, url_prefix="/api/posts")
 
@@ -35,14 +34,15 @@ def get_user_posts():
                 .limit(3)
                 .all()
             )
-            # recent_comments = sorted(recent_comments, key=lambda comment: comment.created_at)
 
             comment_schema = CommentSchema(many=True)
             post_data["comments"] = comment_schema.dump(recent_comments)
             post_data["total_comment_count"] = Comment.query.filter_by(
                 post_id=post.id
             ).count()
-            post_data["total_likes_count"] = Like.query.filter_by(post_id=post.id).count()
+            post_data["total_likes_count"] = Like.query.filter_by(
+                post_id=post.id
+            ).count()
             post_data["isLiked"] = bool(
                 Like.query.filter_by(post_id=post.id, user_id=user_id).first()
             )
@@ -66,9 +66,6 @@ def get_post(id):
 
         if not post:
             return jsonify({"msg": f"No post with id : {id} for user {user_id}"}), 404
-        
-        # if post.user_id != user_id:
-        #     return {"msg": "Permission denied"}, 403
 
         post_schema = PostSchema()
         post_data = post_schema.dump(post)
@@ -104,7 +101,6 @@ def create_post():
 
     schema = PostSchema()
     upload_paths = []
-    #
 
     if "files[]" in request.files:
         files = request.files.getlist("files[]")
@@ -128,7 +124,6 @@ def create_post():
 
     post = Post(description=post_data.description, images=post_data.images)
     post.user_id = user_id
-
 
     db.session.add(post)
     db.session.commit()

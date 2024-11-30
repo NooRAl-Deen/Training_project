@@ -6,7 +6,7 @@ from ...post.models.post import Post
 from ...comment.models.comment import Comment
 from ...reply.models.reply import Reply
 from ...like.models.like import Like
-from .role import Role, UserRole
+from .role import Role
 
 
 @login_manager.user_loader
