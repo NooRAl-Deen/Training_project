@@ -10,7 +10,7 @@ import FriendsList from "@/components/shared/friends-list/FriendsList";
 import ProfileActivity from "@/components/shared/profile-activity/ProfileActivity";
 import PostsPageHeader from "../components/PostsPageHeader";
 import Stories from "../../stories/pages/Stories";
-import FriendSuggestions from "@/components/shared/friends-suggestions/FriendSuggestions";
+import FriendSuggestions from "@/components/shared/friends-suggestions/components/FriendSuggestions";
 import { usePost } from "../hooks/hooks";
 import { useParams } from "react-router-dom";
 

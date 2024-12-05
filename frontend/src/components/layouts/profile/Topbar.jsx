@@ -19,7 +19,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import useAuth from "@/hooks/useAuth";
 import { useLogout } from "@profile/hooks/hooks";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -49,11 +49,11 @@ const AppBar = styled(MuiAppBar, {
 const settings = ["Logout"];
 
 const TopBar = ({ open, handleDrawerOpen, setMode }) => {
-  const { setUser } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate()
   const { mutate } = useLogout(() => {
-    setUser({});
-    navigate('/login');
+    logout();
+    navigate('/login', { replace: true });
   });
   
   const theme = useTheme();
