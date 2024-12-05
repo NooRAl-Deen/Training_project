@@ -10,6 +10,15 @@ from ...comment.models.comment import Comment
 from ...comment.schemas.comment import CommentSchema
 from ...like.models.like import Like
 from werkzeug.utils import secure_filename
+from ..utils.messages import MESSAGES
+from app.utils.status_codes import (
+    SUCCESS,
+    CREATED,
+    FORBIDDEN,
+    NOT_FOUND,
+    BAD_REQUEST,
+    INTERNAL_SERVER_ERROR,
+)
 
 post_api = Blueprint("post_api", __name__, url_prefix="/api/posts")
 
@@ -47,13 +56,21 @@ def get_user_posts():
                 Like.query.filter_by(post_id=post.id, user_id=user_id).first()
             )
         return {
-            "msg": "User posts",
-            "posts": posts_data,
-            "total_pages": posts.pages,
-            "current_page": posts.page,
-        }, 200
+            MESSAGES["msg"]: "User posts",
+            MESSAGES["posts"]: posts_data,
+            MESSAGES["total_pages"]: posts.pages,
+            MESSAGES["current_page"]: posts.page,
+        }, SUCCESS
     except Exception as e:
-        return jsonify({"msg": "Error fetching posts", "error": str(e)}), 500
+        return (
+            jsonify(
+                {
+                    MESSAGES["msg"]: MESSAGES["error_fetching_posts"],
+                    MESSAGES["error"]: str(e),
+                }
+            ),
+            INTERNAL_SERVER_ERROR,
+        )
 
 
 @post_api.route("/<int:id>")
@@ -65,7 +82,16 @@ def get_post(id):
         post = Post.query.filter_by(id=id).first()
 
         if not post:
-            return jsonify({"msg": f"No post with id : {id} for user {user_id}"}), 404
+            return (
+                jsonify(
+                    {
+                        MESSAGES["msg"]: MESSAGES["no_post_for_user"].format(
+                            id=id, user_id=user_id
+                        )
+                    }
+                ),
+                NOT_FOUND,
+            )
 
         post_schema = PostSchema()
         post_data = post_schema.dump(post)
@@ -88,10 +114,21 @@ def get_post(id):
             Like.query.filter_by(post_id=post.id, user_id=user_id).first()
         )
 
-        return {"msg": f"Post with id : {id}", "post": post_data}, 200
+        return {
+            MESSAGES["msg"]: MESSAGES["post_with_id"].format(id=id),
+            MESSAGES["post"]: post_data,
+        }, SUCCESS
 
     except Exception as e:
-        return jsonify({"msg": "Error fetching post", "error": str(e)}), 500
+        return (
+            jsonify(
+                {
+                    MESSAGES["msg"]: MESSAGES["error_fetching_post"],
+                    MESSAGES["error"]: str(e),
+                }
+            ),
+            500,
+        )
 
 
 @post_api.route("/", methods=["POST"])
@@ -120,7 +157,7 @@ def create_post():
             }
         )
     except ValidationError as err:
-        return jsonify(err.messages), 400
+        return jsonify(err.messages), BAD_REQUEST
 
     post = Post(description=post_data.description, images=post_data.images)
     post.user_id = user_id
@@ -128,7 +165,10 @@ def create_post():
     db.session.add(post)
     db.session.commit()
 
-    return {"msg": "Post created successfully", "post": schema.dump(post)}, 201
+    return {
+        MESSAGES["msg"]: MESSAGES["post_created"],
+        MESSAGES["post"]: schema.dump(post),
+    }, CREATED
 
 
 @post_api.route("/<int:id>", methods=["PATCH"])
@@ -139,10 +179,10 @@ def update_post(id):
     post = Post.query.filter_by(id=id).first()
 
     if not post:
-        return {"msg": f"No post with id : {id}"}, 404
+        return {MESSAGES["msg"]: MESSAGES["no_post_with_id"].format(id=id)}, NOT_FOUND
 
     if post.user_id != user_id:
-        return {"msg": "Permission denied"}, 403
+        return {MESSAGES["msg"]: MESSAGES["permission_denied"]}, FORBIDDEN
 
     upload_paths = []
 
@@ -160,7 +200,7 @@ def update_post(id):
     try:
         post_data = schema.load(request.form)
     except ValidationError as err:
-        return jsonify(err.messages), 400
+        return jsonify(err.messages), BAD_REQUEST
 
     post.description = (
         post_data.description if post_data.description else post.description
@@ -169,7 +209,10 @@ def update_post(id):
 
     db.session.commit()
 
-    return {"msg": "Post updated successfully", "post": schema.dump(post)}, 200
+    return {
+        MESSAGES["msg"]: MESSAGES["post_updated"],
+        MESSAGES["post"]: schema.dump(post),
+    }, SUCCESS
 
 
 @post_api.route("/<int:id>", methods=["DELETE"])
@@ -177,18 +220,18 @@ def update_post(id):
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()
     if not post:
-        return {"msg": f"No post with id : {id}"}
+        return {MESSAGES["msg"]: MESSAGES["no_post_with_id"].format(id=id)}, NOT_FOUND
 
     user_id = get_jwt_identity()
     if post.user_id != user_id:
-        return {"msg": "Permission denied"}
+        return {MESSAGES["msg"]: MESSAGES["permission_denied"]}, FORBIDDEN
 
     db.session.delete(post)
     db.session.commit()
 
-    return {"msg": "Post deleted"}
+    return {MESSAGES["msg"]: MESSAGES["post_deleted"]}, SUCCESS
 
 
 @post_api.errorhandler(ValidationError)
 def handle_marshmallow_error(e):
-    return jsonify(e.messages), 400
+    return jsonify(e.messages), BAD_REQUEST

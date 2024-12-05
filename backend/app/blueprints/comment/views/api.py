@@ -6,6 +6,15 @@ from app.app import db
 from sqlalchemy import asc
 from app.blueprints.post.models.post import Post
 from ..schemas.comment import CommentSchema
+from ..utils.messages import MESSAGES
+from app.utils.status_codes import (
+    SUCCESS,
+    CREATED,
+    BAD_REQUEST,
+    FORBIDDEN,
+    NOT_FOUND,
+    UNAUTHORIZED,
+)
 
 comments_api = Blueprint(
     "comments_api", __name__, url_prefix="/api/posts/<int:post_id>/comments"
@@ -24,12 +33,12 @@ def get_comments(post_id):
     )
     schema = CommentSchema()
     return {
-        "msg": "Post Comments",
-        "comments": schema.dump(comments.items, many=True),
-        "total_comments": comments.total,
-        "current_page": comments.page,
-        "per_page": comments.per_page,
-    }, 200
+        MESSAGES["msg"]: MESSAGES["post_comments"],
+        MESSAGES["comments"]: schema.dump(comments.items, many=True),
+        MESSAGES["total_comments"]: comments.total,
+        MESSAGES["current_page"]: comments.page,
+        MESSAGES["per_page"]: comments.per_page,
+    }, SUCCESS
 
 
 @comments_api.route("/<int:comment_id>")
@@ -40,17 +49,17 @@ def get_comment(post_id, comment_id):
     post = Post.query.filter_by(id=post_id).first()
 
     if not post:
-        return {"msg": "Post not found."}, 404
+        return {MESSAGES["msg"]: MESSAGES["post_not_found"]}, NOT_FOUND
 
     if not comment:
-        return {"msg": "Comment not found."}, 404
+        return {MESSAGES["msg"]: MESSAGES["comment_not_found"]}, NOT_FOUND
 
     comment_schema = CommentSchema()
 
     return {
-        "msg": "Comment found.",
-        "comment": comment_schema.dump(comment),
-    }, 200
+        MESSAGES["msg"]: MESSAGES["comment_found"],
+        MESSAGES["comment"]: comment_schema.dump(comment),
+    }, SUCCESS
 
 
 @comments_api.route("", methods=["POST"])
@@ -59,7 +68,7 @@ def add_comment(post_id):
     user_id = get_jwt_identity()
     post = Post.query.filter_by(id=post_id).first()
     if not post:
-        return {"msg": "Post not found."}, 404
+        return {MESSAGES["msg"]: MESSAGES["post_not_found"]}, NOT_FOUND
     input_data = request.json
     input_data["user_id"] = user_id
     input_data["post_id"] = post.id
@@ -69,9 +78,9 @@ def add_comment(post_id):
     db.session.add(comment)
     db.session.commit()
     return {
-        "msg": "Comment added successfuly.",
-        "comment": comment_schema.dump(comment),
-    }, 201
+        MESSAGES["msg"]: MESSAGES["comment_created"],
+        MESSAGES["comment"]: comment_schema.dump(comment),
+    }, CREATED
 
 
 @comments_api.route("/<int:comment_id>", methods=["PATCH"])
@@ -81,22 +90,22 @@ def edit_comment(post_id, comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
     post = Post.query.filter_by(id=post_id).first()
     if not post:
-        return {"msg": "Post not found."}, 404
+        return {MESSAGES["msg"]: MESSAGES["post_not_found"]}, NOT_FOUND
     if not comment:
-        return {"msg": "Comment not found."}, 404
+        return {MESSAGES["msg"]: MESSAGES["comment_not_found"]}, NOT_FOUND
     if comment.user_id != user_id:
-        return {"msg": "Permission denied."}, 401
+        return {MESSAGES["msg"]: MESSAGES["permission_denied"]}, UNAUTHORIZED
     input_data = request.json
     input_data["user_id"] = comment.user_id
     input_data["post_id"] = comment.post_id
     comment_schema = CommentSchema()
     comment_data = comment_schema.load(input_data)
-    comment.text = comment_data['text']
+    comment.text = comment_data["text"]
     db.session.commit()
     return {
-        "msg": "Comment edit successfuly.",
-        "comment": comment_schema.dump(comment),
-    }, 201
+        MESSAGES["msg"]: MESSAGES["comment_editied"],
+        MESSAGES["comment"]: comment_schema.dump(comment),
+    }, SUCCESS
 
 
 @comments_api.route("/<int:comment_id>", methods=["DELETE"])
@@ -105,21 +114,21 @@ def delete_comment(post_id, comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
 
     if not comment:
-        return {"msg": "Comment not found"}, 404
+        return {MESSAGES["msg"]: MESSAGES["comment_not_found"]}, NOT_FOUND
     user_id = get_jwt_identity()
 
     if comment.user_id != user_id:
-        return {"msg": "Permision denied"}, 401
+        return {MESSAGES["msg"]: MESSAGES["permission_denied"]}, UNAUTHORIZED
 
     if comment.post_id != post_id:
-        return {"msg": "Comment not for this post"}, 403
+        return {MESSAGES["msg"]: MESSAGES["comment_not_for_post"]}, FORBIDDEN
 
     db.session.delete(comment)
     db.session.commit()
 
-    return {"msg": "Post deleted successfully"}
+    return {MESSAGES["msg"]: MESSAGES["comment_deleted"]}, SUCCESS
 
 
 @comments_api.errorhandler(ValidationError)
 def handle_marshmallow_error(e):
-    return jsonify(e.messages), 400
+    return jsonify(e.messages), BAD_REQUEST

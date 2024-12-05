@@ -7,6 +7,8 @@ from app.blueprints.auth.schemas.user import UserSchema
 import os
 from app.utils.images_validation import allowed_file, generate_unique_filename
 from app.app import db
+from ..utils.messages import MESSAGES
+from app.utils.status_codes import SUCCESS, NOT_FOUND, BAD_REQUEST
 
 profile_api = Blueprint("profile_api", __name__, url_prefix="/api/profile")
 
@@ -17,7 +19,10 @@ def get_user_profile():
     user_id = get_jwt_identity()
     user = User.query.filter_by(id=user_id).first()
     schema = UserSchema()
-    return {"msg": f"Profile for user", "user": schema.dump(user)}
+    return {
+        MESSAGES["msg"]: MESSAGES["profile_for_user"],
+        MESSAGES["user"]: schema.dump(user),
+    }
 
 
 @profile_api.route("/update-profile", methods=["PATCH"])
@@ -27,7 +32,7 @@ def update_profile():
     user = User.query.filter_by(id=user_id).first()
 
     if not user:
-        return {"msg": "User not found"}, 404
+        return {MESSAGES["msg"]: MESSAGES["user_not_found"]}, NOT_FOUND
 
     schema = UserSchema()
 
@@ -35,10 +40,10 @@ def update_profile():
         profile_pic = request.files["profilePic"]
 
         if profile_pic.filename == "":
-            return {"msg": "No selected file"}, 400
+            return {MESSAGES["msg"]: MESSAGES["no_file_selected"]}, BAD_REQUEST
 
         if not allowed_file(profile_pic.filename):
-            return {"msg": "File type not allowed"}, 400
+            return {MESSAGES["msg"]: MESSAGES["file_type_not_allowed"]}, BAD_REQUEST
 
         filename = secure_filename(profile_pic.filename)
         unique_filename = generate_unique_filename(filename)
@@ -46,7 +51,6 @@ def update_profile():
         profile_pic.save(upload_path)
 
         user.profile_pic = upload_path
-
 
     updated_user = schema.load(request.form, partial=True)
     user.username = updated_user.username if updated_user.username else user.username
@@ -62,9 +66,12 @@ def update_profile():
 
     db.session.commit()
 
-    return {"msg": "Profile updated successfully", "user": schema.dump(user)}
+    return {
+        MESSAGES["msg"]: MESSAGES["profile_updated"],
+        MESSAGES["user"]: schema.dump(user),
+    }, SUCCESS
 
 
 @profile_api.errorhandler(ValidationError)
 def handle_marshmallow_error(e):
-    return jsonify(e.messages), 400
+    return jsonify(e.messages), BAD_REQUEST

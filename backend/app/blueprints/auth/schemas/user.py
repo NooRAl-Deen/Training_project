@@ -2,7 +2,7 @@ from app.app import ma
 from marshmallow import validate, validates, ValidationError
 from marshmallow.fields import String, DateTime, Raw, Date
 from .role import RoleSchema
-
+from ..utils.messages import MESSAGES
 
 from ..models.user import User
 
@@ -12,8 +12,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         required=True,
         validate=[validate.Length(min=3)],
         error_messages={
-            "required": "The name is required.",
-            "invalid": "The name is invalid and needs to be a string.",
+            MESSAGES["required"]: MESSAGES["username_required_msg"],
+            MESSAGES["Invalid"]: MESSAGES["username_invalid_msg"],
         },
     )
 
@@ -21,7 +21,9 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     def validate_username(self, username):
 
         if User.query.filter_by(username=username).count():
-            raise ValidationError(f"Username {username} is already exists.")
+            raise ValidationError(
+                MESSAGES["username_validation_msg"].format(username=username)
+            )
 
     email = String(required=True, validate=[validate.Email()])
 
@@ -29,7 +31,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     def validate_email(self, email):
 
         if User.query.filter_by(email=email).count():
-            raise ValidationError(f"Email {email} is already exists.")
+            raise ValidationError(MESSAGES["email_validation_msg"].format(email=email))
 
     profile_pic = Raw(type="file", data_key="profilePic")
 
@@ -37,8 +39,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         required=True,
         validate=[validate.Length(min=3)],
         error_messages={
-            "required": "City name is required.",
-            "Invalid": "Invalid city name.",
+            MESSAGES["required"]: MESSAGES["city_required_msg"],
+            MESSAGES["Invalid"]: MESSAGES["city_invalid_msg"],
         },
     )
 
@@ -46,8 +48,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         required=True,
         validate=[validate.Regexp(r"^\+\d{1,3}\d{7,14}$")],
         error_messages={
-            "required": "Phone number is required.",
-            "Invalid": "Invalid phone number.",
+            MESSAGES["required"]: MESSAGES["phone_required_msg"],
+            MESSAGES["Invalid"]: MESSAGES["phone_invalid_msg"],
         },
         data_key="phoneNumber",
     )
@@ -56,27 +58,27 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         required=True,
         format="%Y-%m-%d",
         error_messages={
-            "required": "Date of birth is required.",
-            "invalid": "Date of birth must be in the format YYYY-MM-DD.",
+            MESSAGES["required"]: MESSAGES["dob_required_msg"],
+            MESSAGES["Invalid"]: MESSAGES["dob_invalid_msg"],
         },
         data_key="dob",
     )
 
     gender = String(
         required=True,
-        validate=validate.OneOf(
-            ["male", "female"]
-        ),
+        validate=validate.OneOf(["male", "female"]),
         error_messages={
-            "required": "Gender is required.",
-            "invalid": "Gender must be 'Male', 'Female', or 'Other'.",
+            MESSAGES["required"]: MESSAGES["gender_required_msg"],
+            MESSAGES["Invalid"]: MESSAGES["gender_invalid_msg"],
         },
     )
 
     @validates("phone_number")
     def validate_phone_number(self, phone_number):
         if User.query.filter_by(phone_number=phone_number).count():
-            raise ValidationError(f"Phone number {phone_number} is already exists.")
+            raise ValidationError(
+                MESSAGES["phone_validation_msg"].format(phone_number=phone_number)
+            )
 
     created_at = DateTime(dump_only=True, data_key="createdAt")
     roles = ma.Nested(RoleSchema, many=True)
@@ -95,7 +97,7 @@ class UserCreateSchema(UserSchema):
         validate=[
             validate.Regexp(
                 r"^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$",
-                error="The password need to be at least 8 characters long, and have at least 1 of each of the following: lowercase letter, uppercase letter, special character, number.",
+                error=MESSAGES["password_error"],
             )
         ],
     )
