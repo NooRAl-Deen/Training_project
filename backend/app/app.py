@@ -41,6 +41,8 @@ def create_app():
     from app.blueprints.timeline.views.api import timeline_api
     from app.blueprints.reply.views.api import replies_api
     from app.blueprints.friend_suggestions.views.api import friend_suggestions_api
+    from app.blueprints.chat.views.conversation import conversation_api
+    from app.blueprints.chat.views.message import message_api
 
     # Register Blueprints
     app.register_blueprint(auth_api)
@@ -52,6 +54,8 @@ def create_app():
     app.register_blueprint(timeline_api)
     app.register_blueprint(replies_api)
     app.register_blueprint(friend_suggestions_api)
+    app.register_blueprint(conversation_api)
+    app.register_blueprint(message_api)
 
     # Import Models
     from app.blueprints.auth.models.user import User
@@ -61,5 +65,7 @@ def create_app():
     from app.blueprints.comment.models.comment import Comment
     from app.blueprints.like.models.like import Like
     from app.blueprints.reply.models.reply import Reply
+    from app.blueprints.chat.models.conversation import Conversation
+    from app.blueprints.chat.models.message import Message
 
     return app
