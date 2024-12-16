@@ -6,7 +6,7 @@ import PostRoutes from "./PostRoutes";
 
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import AuthLayout from "@/components/layouts/auth/AuthLayout";
-
+import ChatRoutes from "./ChatRoutes";
 
 const AppLayout = lazy(() => import("@/components/layouts/app/AppLayout"));
 
@@ -20,6 +20,7 @@ const mainRoutes = MainRoutes();
 const authRoutes = AuthRoutes();
 const profileRoutes = ProfileRoutes();
 const postRoutes = PostRoutes();
+const chatRoutes = ChatRoutes();
 
 const AppRoutes = () => {
   return (
@@ -38,8 +39,10 @@ const AppRoutes = () => {
           <Route path="/profile" element={<ProfileLayout />}>
             {profileRoutes}
             {postRoutes}
+
             <Route path="*" element={<NotFound />} />
           </Route>
+          <Route element={<ProfileLayout />}>{chatRoutes}</Route>
         </Routes>
       </Router>
     </Suspense>

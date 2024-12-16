@@ -1,0 +1,50 @@
+.styledPaper {
+  padding: 16px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.notSlectedConversation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  text-align: center; 
+}
+
+.messageContainer {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 20px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 10px;
+
+  &.own {
+    justify-content: flex-end;
+  }
+
+  &.other {
+    justify-content: flex-start;
+  }
+}
+
+.messageContent {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 70%;
+  background-color: var(--primary-main);
+
+  &.own {
+    background-color: var(--secondary-main);
+  }
+}
+
+.messageTimestamp {
+  display: block;
+  text-align: right;
+  color: #9e9e9e;
+}

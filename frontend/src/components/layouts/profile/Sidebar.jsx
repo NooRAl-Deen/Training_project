@@ -18,6 +18,7 @@ import {
   Article as ArticleIcon,
 } from "@mui/icons-material";
 import HomeIcon from '@mui/icons-material/Home';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import { NavLink } from "react-router-dom";
 const drawerWidth = 240;
 
@@ -78,6 +79,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const menuItems = [
   { text: "News", icon: HomeIcon, to: "/profile/news" },
   { text: "My Posts", icon: ArticleIcon, to: "/profile/posts" },
+  { text: "Chat", icon: ChatBubbleIcon, to: "/chat" },
   { text: "Profile", icon: AccountCircleIcon, to: "/profile", end: true },
 ];
 
