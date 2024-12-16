@@ -43,6 +43,7 @@ def create_app():
     from app.blueprints.friend_suggestions.views.api import friend_suggestions_api
     from app.blueprints.chat.views.conversation import conversation_api
     from app.blueprints.chat.views.message import message_api
+    from app.blueprints.profile_activity.views.profile_activity import profile_activity_api
 
     # Register Blueprints
     app.register_blueprint(auth_api)
@@ -56,6 +57,7 @@ def create_app():
     app.register_blueprint(friend_suggestions_api)
     app.register_blueprint(conversation_api)
     app.register_blueprint(message_api)
+    app.register_blueprint(profile_activity_api)
 
     # Import Models
     from app.blueprints.auth.models.user import User
