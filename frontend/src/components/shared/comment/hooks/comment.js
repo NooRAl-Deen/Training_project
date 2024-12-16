@@ -19,6 +19,7 @@ import {
 import { POSTS_QUERY_KEY } from "@posts/constants/constants";
 import { TIMELINE_QUERY_KEY } from "../../../../features/timeline/constants/constants";
 import { GET_POST_KEY } from "../../../../features/posts/constants/constants";
+import { PROFILE_ACTIVITY_KEY } from "../../profile-activity/constants/constants";
 
 export const useComments = (postId, options) => {
   return useInfiniteQuery({
@@ -50,6 +51,7 @@ export const useCreateComment = (postId, onSuccess) => {
       queryClient.invalidateQueries({ queryKey: TIMELINE_QUERY_KEY });
       queryClient.invalidateQueries({ queryKey: [GET_COMMENTS_KEY, postId] });
       queryClient.invalidateQueries({ queryKey: GET_POST_KEY });
+      queryClient.invalidateQueries({ queryKey: PROFILE_ACTIVITY_KEY });
       onSuccess?.();
     },
   });
