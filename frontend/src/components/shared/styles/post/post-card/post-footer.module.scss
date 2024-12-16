@@ -1,0 +1,13 @@
+
+.commentsSectionContainer {
+  display: flex;
+  flex-direction: column;
+  .viewAllComments {
+    padding: 5px 20px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}

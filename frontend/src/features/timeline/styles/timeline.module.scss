@@ -1,0 +1,59 @@
+.layoutContainer {
+
+    display: flex;
+    .mainSection {
+      flex-grow: 4;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  
+      .newPostSection {
+        display: flex;
+        max-width: 680px;
+        width: 100%;
+        margin: 0 auto;
+        justify-content: space-between;
+        gap: 10px;
+        border-radius: 20px;
+        padding: 20px;
+        background-color: var(--background-paper);
+        box-shadow: var(--Paper-shadow);
+        background-image: var(--Paper-overlay);
+      }
+      
+      .postsSection {
+      }
+    }
+  
+    .rightSection {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--divider) var(--background-default);
+      scroll-behavior: smooth;
+      margin-right: -20px;
+  
+      .friendSuggestions {
+      }
+  
+      .profileActivity {
+      }
+  
+      .chatFriends {
+  
+      }
+    }
+  
+    @media (max-width: 1024px) {
+      .rightSection {
+        display: none;
+      }
+    }
+  }
+  

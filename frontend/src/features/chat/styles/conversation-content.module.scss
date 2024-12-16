@@ -1,0 +1,38 @@
+.messageContainer {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 20px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--divider) var(--background-paper);
+}
+
+.message {
+  display: flex;
+  margin-bottom: 10px;
+
+  &.own {
+    justify-content: flex-end;
+  }
+
+  &.other {
+    justify-content: flex-start;
+  }
+}
+
+.messageContent {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 70%;
+  background-color: var(--primary-main);
+
+  &.own {
+    background-color: var(--secondary-main);
+  }
+}
+
+.messageTimestamp {
+  display: block;
+  text-align: right;
+  color: var(--divider);
+}

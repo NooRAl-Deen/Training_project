@@ -1,0 +1,32 @@
+{
+  "profile": {
+    "card_title": "Profile",
+    "role": "Role",
+    "phone_number": "Phone Number",
+    "email": "Email Adress",
+    "city": "City",
+    "date_of_birth": "Date of Birth",
+    "gender": "Gender",
+    "join_date": "Joined From"
+  },
+  "edit": {
+    "change_btn": "Change"
+  },
+  "interests": {
+    "interests_title": "Interests",
+    "interest_description": "Interest Description",
+    "interest_photography": "Capturing moments",
+    "interest_traveling": "Exploring new places",
+    "interest_reading": "Fiction, Sci-fi, etc.",
+    "interest_coding": "Building web apps"
+  },
+  "statics": {
+    "title": "User Statics",
+    "age": "Your Age",
+    "days": " days",
+    "posts": " posts",
+    "years": " years old",
+    "number_of_posts": "Number of posts you added",
+    "days_from_registration_date": "Your time on our website"
+  }
+}

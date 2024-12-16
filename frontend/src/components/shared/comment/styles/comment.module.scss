@@ -1,0 +1,22 @@
+.commentsSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+
+  .userImg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .text {
+    color: var(--text-secondary);
+  }
+}
+
+.commentContentContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

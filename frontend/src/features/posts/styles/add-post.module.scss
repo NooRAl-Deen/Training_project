@@ -1,0 +1,123 @@
+.addPostContainer {
+    background-color: var(--background-paper);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  
+    .addPostHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+  
+    .userImage {
+      width: 48px;
+      height: 48px;
+    }
+  
+    .userDetails {
+      display: flex;
+      flex-direction: column;
+  
+      .userName {
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: capitalize;
+        color: var(--text-primary);
+      }
+  
+      .role {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+    }
+  
+    .divider {
+      margin: 1rem 0;
+      background-color: var(--divider);
+    }
+  
+    .postContainer {
+      .postDescription {
+        width: 100%;
+        font-size: 1rem;
+        color: var(--text-primary);
+        background-color: var(--background-default);
+        border-radius: 8px;
+        padding: 0.75rem;
+  
+        textarea {
+          border: none;
+          resize: none;
+        }
+      }
+    }
+  
+    .postActions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .leftActions {
+        display: flex;
+        gap: 0.5rem;
+
+        .leftActionsIcon {
+          cursor: pointer;
+          color: var(--text-secondary);
+          background-color: var(--background-default);
+            width: 40px;
+            height: 40px;
+            padding: 10px;
+          border-radius: 50%;
+  
+          &:hover {
+            color: var(--primary-main);
+          }
+        }
+      }
+  
+      .rightActions {
+        .postButton {
+          background-color: var(--primary-main);
+          color: var(--primary-contrastText);
+          text-transform: capitalize;
+          border-radius: 8px;
+          font-weight: 600;
+          padding: 0.5rem 1.5rem;
+          opacity: 0.8;
+          transition: all .3s ease-in-out;
+  
+          &:hover {
+            background-color: var(--primary-main);
+            opacity: 1;
+          }
+
+          
+        }
+      }
+
+      
+    }
+
+    .closeEmojis {
+      margin-left: auto;
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: transform 0.2s, color 0.2s;
+        margin-bottom: 0;
+        &:hover {
+            color: var(--error-main);
+            transform: scale(1.1);
+        }
+    }
+  }
+  

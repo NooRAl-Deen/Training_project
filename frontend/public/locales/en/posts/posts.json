@@ -1,0 +1,29 @@
+{
+    "add_post": {
+        "placeholder": "What's on your mind,",
+        "post_btn": "post"
+    },
+
+    "actions_menu": {
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+
+    "confirm_delete_modal": {
+        "modal_title" : "Delete Post",
+        "title_text": "Confirm Deletion",
+        "message": "Are you sure you want to delete this post ?",
+        "cancel_btn": "cancel",
+        "confirm_btn": "confirm"
+    },
+
+    "image_upload": {
+        "drag_active_msg": "Drop the files here ...",
+        "drag_inactive_msg": "Drop images here or click to upload"
+    },
+
+    "edit_post": {
+        "placeholder":"What's on your mind,",
+        "update_btn": "update"
+    }
+}

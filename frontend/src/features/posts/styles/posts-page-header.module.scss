@@ -1,0 +1,54 @@
+.searchForm {
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  width: auto;
+  border-radius: 5px;
+  flex: 1;
+
+  .inputBase {
+    margin-left: 1rem;
+    flex: 1;
+    color: var(--text-secondary); 
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .iconButton {
+    padding: 10px;
+    color: var(--primary-main);
+  }
+}
+
+.addButton {
+  padding: 10px 20px; 
+  font-size: 14px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  .MuiButton-startIcon {
+    margin-right: 8px; 
+  }
+
+  .buttonText {
+    white-space: nowrap; 
+    font-weight: 500;
+  }
+
+
+  @media (max-width: 600px) {
+    padding: 8px 16px; 
+    font-size: 14px; 
+    width: 100%; 
+  }
+
+
+  @media (max-width: 400px) {
+    padding: 6px 12px; 
+    font-size: 12px; 
+  }
+}
+

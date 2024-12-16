@@ -1,0 +1,50 @@
+.friendSuggestions {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .friendSuggestionsHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .friendSuggestionsHeaderIcon {
+      font-size: 30px;
+      color: var(--primary-main);
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .suggestion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .person {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .addButton {
+      background-color: var(--primary-main);
+      color: var(--primary-contrastText);
+      text-transform: capitalize;
+    }
+  }
+}
+
+.divider {
+  border-color: var(--divider);
+  opacity: 1;
+}
